@@ -1,3 +1,4 @@
 import Test from './Test'
-
-export { Test }
+import NavBar from './NavBar'
+import MoviesTable from './MoviesTable'
+export { Test, NavBar, MoviesTable }

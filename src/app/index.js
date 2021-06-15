@@ -1,12 +1,18 @@
 import React from 'react'
 import { FilmProvider } from '../provider'
-import { Test } from '../components'
+import { NavBar, MoviesTable } from '../components'
+import { Container } from "@material-ui/core";
 
 const App = () => {
 
     return (
         <FilmProvider>
-            <Test />
+            <div>
+                <NavBar />
+                <Container maxWidth="lg">
+                    <MoviesTable />
+                </Container>
+            </div>
         </FilmProvider>
     )
 }
