@@ -1,19 +1,28 @@
 import React from 'react'
 import { FilmProvider } from '../provider'
-import { NavBar, MoviesTable } from '../components'
+import { BrowserRouter, Route } from "react-router-dom";
+import { NavBar, MoviesTable, Film, About } from '../components'
 import { Container } from "@material-ui/core";
+import { useFilm } from '../hooks'
 
 const App = () => {
 
+    const { startPage } = useFilm()
     return (
-        <FilmProvider>
-            <div>
-                <NavBar />
-                <Container maxWidth="lg" style={{ marginTop: "10%" }}>
-                    <MoviesTable />
-                </Container>
-            </div>
-        </FilmProvider>
+
+        <BrowserRouter>
+            <NavBar />
+            <Container maxWidth="lg" style={{ marginTop: "5%" }}>
+
+                {startPage ? <About /> : <div>
+                    <Route path='/table' render={() => <MoviesTable />} />
+                    <Route path='/film' render={() => <Film />} />
+                </div>}
+
+
+            </Container>
+        </BrowserRouter>
+
     )
 }
 

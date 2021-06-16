@@ -3,14 +3,21 @@ import ApiService from "../apis/ApiService";
 export const FilmContext = createContext();
 
 export default function FilmProvider(props) {
+  //массив фильмов
   const [films, setFilms] = useState([]);
-  const [loading, setLoading] = useState(true);
 
-  const loadNextFilms = (pageNumber) => {
+  //состояние стартовой страницы
+  const [startPage, setStartPage] = useState(true);
+
+  const [pageNumber, setPageNumber] = useState(1);
+
+  //Функция загрузки новой порции фильмов
+  const loadNextFilms = () => {
     ApiService.getFilms(pageNumber).then((res) => {
       setFilms((oldValue) => {
         addCommentField(res);
-        console.log(films);
+        setPageNumber(pageNumber + 1);
+        console.log(pageNumber);
         return [...oldValue, ...res];
       });
     });
@@ -25,7 +32,7 @@ export default function FilmProvider(props) {
 
   return (
     <FilmContext.Provider
-      value={{ loadNextFilms, loading, films }}
+      value={{ loadNextFilms, films, startPage, setStartPage }}
       {...props}
     />
   );
