@@ -28,45 +28,44 @@ const Film = () => {
     return currentFilm.genres.map((g, i) => <div key={g + i}>{g}</div>);
   };
 
-  if (currentFilm)
-    return (
-      <Grid container spacing={3}>
-        <Grid item xs={3}>
-          <Paper className={classes.paper}>
-            <div>{currentFilm.title_english}</div>
-            <img
-              style={{ maxWidth: "500px", marginTop: "5%" }}
-              src={currentFilm.medium_cover_image}
-              alt="full-img"
-            />
-          </Paper>
-        </Grid>
-        <Grid item xs={6}>
-          <Paper className={classes.paper}>
-            <div>
-              <div className={classes.descriptionContent}>
-                Рейтинг: {currentFilm.rating}
-              </div>
-              <div className={classes.descriptionContent}>
-                Длительность: {currentFilm.runtime} min
-              </div>
-              <div className={classes.descriptionContent}>
-                Жанры: {renderGenres()}
-              </div>
-              <div className={classes.descriptionContent}>
-                Полное описание: {currentFilm.description_full}{" "}
-              </div>
-              <div className={classes.descriptionContent}>
-                Год выпуска: {currentFilm.year}
-              </div>
-            </div>
-          </Paper>
-        </Grid>
-        <Grid item xs={9}>
-          <Paper className={classes.paper}>Комментарии тута будут</Paper>
-        </Grid>
+  return (
+    <Grid container spacing={3}>
+      <Grid item xs={3}>
+        <Paper className={classes.paper}>
+          <div>{currentFilm.title_english}</div>
+          <img
+            style={{ maxWidth: "500px", marginTop: "5%" }}
+            src={currentFilm.medium_cover_image}
+            alt="full-img"
+          />
+        </Paper>
       </Grid>
-    );
+      <Grid item xs={6}>
+        <Paper className={classes.paper}>
+          <div>
+            <div className={classes.descriptionContent}>
+              Рейтинг: {currentFilm.rating}
+            </div>
+            <div className={classes.descriptionContent}>
+              Длительность: {currentFilm.runtime} min
+            </div>
+            <div className={classes.descriptionContent}>
+              Жанры: {renderGenres()}
+            </div>
+            <div className={classes.descriptionContent}>
+              Полное описание: {currentFilm.description_full}{" "}
+            </div>
+            <div className={classes.descriptionContent}>
+              Год выпуска: {currentFilm.year}
+            </div>
+          </div>
+        </Paper>
+      </Grid>
+      <Grid item xs={9}>
+        <Paper className={classes.paper}>Комментарии тута будут</Paper>
+      </Grid>
+    </Grid>
+  );
 };
 
 export default Film;
