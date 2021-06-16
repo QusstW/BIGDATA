@@ -9,6 +9,7 @@ import {
   TableHead,
   TableRow,
   Paper,
+  Button,
 } from "@material-ui/core";
 
 import { useFilm } from "../hooks";
@@ -41,7 +42,7 @@ const useStyles = makeStyles({
 export default function MoviesTable() {
   const classes = useStyles();
 
-  const { loadNextFilms, films } = useFilm();
+  const { loadNextFilms, films, setCurrentFilm } = useFilm();
 
   useEffect(() => {
     loadNextFilms(1);
@@ -58,7 +59,7 @@ export default function MoviesTable() {
       <TableRow key={f + index}>
         <TableCell>
           <img
-            style={{ maxWidth: "80px" }}
+            style={{ maxWidth: "80px", borderRadius: "5px" }}
             src={f.medium_cover_image}
             alt="f"
           />
@@ -67,7 +68,20 @@ export default function MoviesTable() {
         <TableCell>{f.year}</TableCell>
         <TableCell>{f.rating}</TableCell>
         <TableCell>
-          <NavLink to="/film">More and commenting</NavLink>
+          <Button
+            color="primary"
+            onClick={() => {
+              console.log(f);
+              setCurrentFilm(f);
+            }}
+          >
+            <NavLink
+              style={{ textDecoration: "none", color: "#000" }}
+              to="/film"
+            >
+              More and commenting
+            </NavLink>
+          </Button>
         </TableCell>
       </TableRow>
     ));
@@ -82,6 +96,7 @@ export default function MoviesTable() {
       >
         asdasd
       </button>
+
       <TableContainer component={Paper}>
         <Table
           className={classes.table}

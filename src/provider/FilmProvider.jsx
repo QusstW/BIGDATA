@@ -9,7 +9,12 @@ export default function FilmProvider(props) {
   //состояние стартовой страницы
   const [startPage, setStartPage] = useState(true);
 
+  //текущая страница для запроса api
   const [pageNumber, setPageNumber] = useState(1);
+  //текущий фильм
+  const [currentFilm, setCurrentFilm] = useState();
+
+  const [loading, setLoading] = useState(false);
 
   //Функция загрузки новой порции фильмов
   const loadNextFilms = () => {
@@ -17,22 +22,40 @@ export default function FilmProvider(props) {
       setFilms((oldValue) => {
         addCommentField(res);
         setPageNumber(pageNumber + 1);
+        setLoading(false);
+        console.log(loading);
         console.log(pageNumber);
         return [...oldValue, ...res];
       });
     });
   };
 
-  // Функция добавляет поле comments к каждому объекту текущей порции
+  // функция добавляет поле comments к каждому объекту текущей порции
   const addCommentField = (films) => {
     return films.forEach((f) => {
       f.comments = [];
     });
   };
 
+  const loadCurrentFilm = (currentFilm) => {
+    ApiService.getCurrentFilm(currentFilm).then((res) => console.log("12"));
+  };
+
   return (
     <FilmContext.Provider
-      value={{ loadNextFilms, films, startPage, setStartPage }}
+      value={{
+        loadNextFilms,
+        films,
+        //
+        startPage,
+        setStartPage,
+        //
+        currentFilm,
+        setCurrentFilm,
+        //
+        loading,
+        setLoading,
+      }}
       {...props}
     />
   );
