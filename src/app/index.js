@@ -9,7 +9,7 @@ const App = () => {
         <FilmProvider>
             <div>
                 <NavBar />
-                <Container maxWidth="lg">
+                <Container maxWidth="lg" style={{ marginTop: "10%" }}>
                     <MoviesTable />
                 </Container>
             </div>
