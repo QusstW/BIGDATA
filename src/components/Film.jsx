@@ -1,7 +1,7 @@
 import React from "react";
 import { useFilm } from "../hooks";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Paper } from "@material-ui/core";
+import { Grid, Paper, Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,12 +22,37 @@ const useStyles = makeStyles((theme) => ({
 
 const Film = () => {
   const classes = useStyles();
-  const { currentFilm } = useFilm();
+  const { currentFilm, addComment, deleteComment } = useFilm();
 
   const renderGenres = () => {
     return currentFilm.genres.map((g, i) => <div key={g + i}>{g}</div>);
   };
 
+  const currentValueText = React.useRef();
+
+  const renderComment = () => {
+    console.log(currentFilm);
+    return currentFilm.comments.map((e) => (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <div>{e.value}</div>
+        <Button
+          variant="outlined"
+          color="secondary"
+          onClick={() => {
+            deleteComment(e.value, currentFilm.id);
+          }}
+        >
+          удалить
+        </Button>
+      </div>
+    ));
+  };
   return (
     <Grid container spacing={3}>
       <Grid item xs={3}>
@@ -62,7 +87,35 @@ const Film = () => {
         </Paper>
       </Grid>
       <Grid item xs={9}>
-        <Paper className={classes.paper}>Комментарии тута будут</Paper>
+        <Paper
+          className={classes.paper}
+          style={{ display: "flex", justifyContent: "space-between" }}
+        >
+          <textarea
+            placeholder="...Add Comment"
+            style={{ width: "100%" }}
+            ref={currentValueText}
+          />
+          <Button
+            variant="outlined"
+            color="secondary"
+            style={{ marginLeft: "5%" }}
+            onClick={() => {
+              addComment(currentValueText.current.value, currentFilm.id);
+            }}
+          >
+            Send
+          </Button>
+        </Paper>
+      </Grid>
+      <Grid item xs={9}>
+        <Paper className={classes.paper}>
+          {currentFilm.comments.length === 0 ? (
+            <div>no message</div>
+          ) : (
+            renderComment()
+          )}
+        </Paper>
       </Grid>
     </Grid>
   );

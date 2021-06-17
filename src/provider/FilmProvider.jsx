@@ -23,8 +23,6 @@ export default function FilmProvider(props) {
         addCommentField(res);
         setPageNumber(pageNumber + 1);
         setLoading(false);
-        console.log(loading);
-        console.log(pageNumber);
         return [...oldValue, ...res];
       });
     });
@@ -37,9 +35,32 @@ export default function FilmProvider(props) {
     });
   };
 
-  const loadCurrentFilm = (currentFilm) => {
-    ApiService.getCurrentFilm(currentFilm).then((res) => console.log("12"));
+  const addComment = (value, id) => {
+    setFilms((oldValue) => {
+      const extra = oldValue;
+      extra.forEach((e) => {
+        if (e.id === id) {
+          e.comments.push({ value });
+        }
+      });
+      return extra;
+    });
+    let obj = null;
+    films.forEach((e) => {
+      if (e.id === id) obj = e;
+    });
+
+    ApiService.postComment(obj).then((res) => {
+      setCurrentFilm(() => {
+        return {
+          ...res,
+          comments: [...res.comments],
+        };
+      });
+    });
   };
+
+  const deleteComment = (value, id) => {};
 
   return (
     <FilmContext.Provider
@@ -55,6 +76,10 @@ export default function FilmProvider(props) {
         //
         loading,
         setLoading,
+        //
+        addComment,
+        //
+        deleteComment,
       }}
       {...props}
     />

@@ -88,27 +88,28 @@ export default function MoviesTable() {
   };
 
   return (
-    <div>
-      <button
-        onClick={() => {
-          loadNextFilms();
-        }}
+    <>
+      <Paper elevation={3}>
+        <TableContainer component={Paper}>
+          <Table
+            className={classes.table}
+            size="small"
+            aria-label="a dense table"
+          >
+            <TableHead>
+              <TableRow>{renderCategory()}</TableRow>
+            </TableHead>
+            <TableBody>{renderBodyTable()}</TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
+      <div
+        style={{ marginTop: "2%", display: "flex", justifyContent: "center" }}
       >
-        asdasd
-      </button>
-
-      <TableContainer component={Paper}>
-        <Table
-          className={classes.table}
-          size="small"
-          aria-label="a dense table"
-        >
-          <TableHead>
-            <TableRow>{renderCategory()}</TableRow>
-          </TableHead>
-          <TableBody>{renderBodyTable()}</TableBody>
-        </Table>
-      </TableContainer>
-    </div>
+        <Button onClick={loadNextFilms} variant="outlined" color="secondary">
+          Load more
+        </Button>
+      </div>
+    </>
   );
 }
