@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import { useFilm } from "../hooks";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -32,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Film = () => {
   const classes = useStyles();
-  const { currentFilm, addComment, deleteComment } = useFilm();
+  const { currentFilm, addComment, deleteComment, setIsReady } = useFilm();
 
   const renderGenres = () => {
     return currentFilm.genres.map((g, i) => <div key={g + i}>{g}</div>);
@@ -64,74 +65,87 @@ const Film = () => {
     ));
   };
   return (
-    <Grid container spacing={3}>
-      <Grid item xs={3}>
-        <Paper className={classes.paper}>
-          <Card style={{ maxWidth: 345 }}>
-            <Typography gutterBottom variant="h5" component="h2">
-              {currentFilm.title_english}
-            </Typography>
-            <CardMedia
-              className={classes.media}
-              image={currentFilm.medium_cover_image}
-              title="Contemplative Reptile"
-            />
-          </Card>
-        </Paper>
-      </Grid>
-      <Grid item xs={6}>
-        <Paper className={classes.paper}>
-          <div>
-            <div className={classes.descriptionContent}>
-              Рейтинг: {currentFilm.rating}
-            </div>
-            <div className={classes.descriptionContent}>
-              Длительность: {currentFilm.runtime} min
-            </div>
-            <div className={classes.descriptionContent}>
-              Жанры: {renderGenres()}
-            </div>
-            <div className={classes.descriptionContent}>
-              Полное описание: {currentFilm.description_full}{" "}
-            </div>
-            <div className={classes.descriptionContent}>
-              Год выпуска: {currentFilm.year}
-            </div>
-          </div>
-        </Paper>
-      </Grid>
-      <Grid item xs={9}>
-        <Paper
-          className={classes.paper}
-          style={{ display: "flex", justifyContent: "space-between" }}
+    <>
+      <Button variant="outlined" color="secondary">
+        <NavLink
+          onClick={() => {
+            setIsReady(false);
+          }}
+          to="/table"
+          style={{ textDecoration: "none", color: "#000" }}
         >
-          <textarea
-            placeholder="...Add Comment"
-            style={{ width: "100%" }}
-            ref={currentValueText}
-          />
-          <Button
-            variant="outlined"
-            color="secondary"
-            style={{ marginLeft: "5%" }}
-            onClick={() => {
-              addComment(currentValueText.current.value, currentFilm.id);
-            }}
+          Back
+        </NavLink>
+      </Button>
+      <Grid style={{ marginTop: "2%" }} container spacing={3}>
+        <Grid item xs={3}>
+          <Paper className={classes.paper}>
+            <Card style={{ maxWidth: 345 }}>
+              <Typography gutterBottom variant="h5" component="h2">
+                {currentFilm.title_english}
+              </Typography>
+              <CardMedia
+                className={classes.media}
+                image={currentFilm.medium_cover_image}
+                title="Contemplative Reptile"
+              />
+            </Card>
+          </Paper>
+        </Grid>
+        <Grid item xs={6}>
+          <Paper className={classes.paper}>
+            <div>
+              <div className={classes.descriptionContent}>
+                Рейтинг: {currentFilm.rating}
+              </div>
+              <div className={classes.descriptionContent}>
+                Длительность: {currentFilm.runtime} min
+              </div>
+              <div className={classes.descriptionContent}>
+                Жанры: {renderGenres()}
+              </div>
+              <div className={classes.descriptionContent}>
+                Полное описание: {currentFilm.description_full}{" "}
+              </div>
+              <div className={classes.descriptionContent}>
+                Год выпуска: {currentFilm.year}
+              </div>
+            </div>
+          </Paper>
+        </Grid>
+        <Grid item xs={9}>
+          <Paper
+            className={classes.paper}
+            style={{ display: "flex", justifyContent: "space-between" }}
           >
-            Send
-          </Button>
-        </Paper>
+            <textarea
+              placeholder="...Add Comment"
+              style={{ width: "100%" }}
+              ref={currentValueText}
+            />
+            <Button
+              variant="outlined"
+              color="secondary"
+              style={{ marginLeft: "5%" }}
+              onClick={() => {
+                addComment(currentValueText.current.value, currentFilm.id);
+              }}
+            >
+              Send
+            </Button>
+          </Paper>
+        </Grid>
+        <Grid item xs={9}>
+          <Paper className={classes.paper}>
+            {currentFilm.comments.length === 0 ? (
+              <div>no message</div>
+            ) : (
+              renderComment()
+            )}
+          </Paper>
+        </Grid>
       </Grid>
-      <Grid item xs={9}>
-        <Paper className={classes.paper}>
-          {currentFilm.comments.length === 0 ? (
-            <div>no message</div>
-          ) : (
-            renderComment()
-          )}
-        </Paper>
-      </Grid>
-    </Grid>
+    </>
   );
 };
 

@@ -42,10 +42,12 @@ const useStyles = makeStyles({
 export default function MoviesTable() {
   const classes = useStyles();
 
-  const { loadNextFilms, films, setCurrentFilm } = useFilm();
+  const { loadNextFilms, films, setCurrentFilm, isReady } = useFilm();
 
   useEffect(() => {
-    loadNextFilms(1);
+    if (isReady) {
+      loadNextFilms(1);
+    }
   }, []);
 
   const renderCategory = () => {

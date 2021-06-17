@@ -16,6 +16,8 @@ export default function FilmProvider(props) {
 
   const [loading, setLoading] = useState(false);
 
+  const [isReady, setIsReady] = useState(false);
+
   //Функция загрузки новой порции фильмов
   const loadNextFilms = () => {
     ApiService.getFilms(pageNumber).then((res) => {
@@ -100,6 +102,9 @@ export default function FilmProvider(props) {
         addComment,
         //
         deleteComment,
+        //
+        isReady,
+        setIsReady,
       }}
       {...props}
     />

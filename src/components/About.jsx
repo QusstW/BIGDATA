@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 const About = () => {
   const classes = useStyles();
 
-  const { setStartPage } = useFilm();
+  const { setStartPage, setIsReady } = useFilm();
 
   return (
     <div className={classes.wrapper}>
@@ -30,6 +30,7 @@ const About = () => {
       <Button
         onClick={() => {
           setStartPage(false);
+          setIsReady(true);
         }}
         className={classes.button}
         variant="contained"
