@@ -1,7 +1,14 @@
 import React from "react";
 import { useFilm } from "../hooks";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Paper, Button } from "@material-ui/core";
+import {
+  Grid,
+  Paper,
+  Button,
+  CardMedia,
+  Card,
+  Typography,
+} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "3%",
     textAlign: "start",
   },
+  media: {
+    height: 340,
+  },
 }));
 
 const Film = () => {
@@ -31,9 +41,9 @@ const Film = () => {
   const currentValueText = React.useRef();
 
   const renderComment = () => {
-    console.log(currentFilm);
-    return currentFilm.comments.map((e) => (
+    return currentFilm.comments.map((e, index) => (
       <div
+        key={e + index}
         style={{
           display: "flex",
           flexDirection: "row",
@@ -57,12 +67,16 @@ const Film = () => {
     <Grid container spacing={3}>
       <Grid item xs={3}>
         <Paper className={classes.paper}>
-          <div>{currentFilm.title_english}</div>
-          <img
-            style={{ maxWidth: "500px", marginTop: "5%" }}
-            src={currentFilm.medium_cover_image}
-            alt="full-img"
-          />
+          <Card style={{ maxWidth: 345 }}>
+            <Typography gutterBottom variant="h5" component="h2">
+              {currentFilm.title_english}
+            </Typography>
+            <CardMedia
+              className={classes.media}
+              image={currentFilm.medium_cover_image}
+              title="Contemplative Reptile"
+            />
+          </Card>
         </Paper>
       </Grid>
       <Grid item xs={6}>
