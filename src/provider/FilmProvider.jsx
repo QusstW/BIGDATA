@@ -60,7 +60,27 @@ export default function FilmProvider(props) {
     });
   };
 
-  const deleteComment = (value, id) => {};
+  const deleteComment = (value, id) => {
+    films.forEach((e) => {
+      if (e.id === id) {
+        e.comments = e.comments.filter((e) => e.value !== value);
+      }
+    });
+
+    let extra = null;
+    films.forEach((e) => {
+      if (e.id === id) extra = e;
+    });
+
+    ApiService.deleteComment(extra).then((res) => {
+      setCurrentFilm(() => {
+        return {
+          ...res,
+          comments: [...res.comments],
+        };
+      });
+    });
+  };
 
   return (
     <FilmContext.Provider

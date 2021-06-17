@@ -29,4 +29,11 @@ export default class ApiService {
             resolve(result)
         })
     }
+
+    static deleteComment = (obj) => {
+        return new Promise((resolve) => {
+            const result = obj
+            resolve(result)
+        })
+    }
 }
