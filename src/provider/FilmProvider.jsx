@@ -38,15 +38,16 @@ export default function FilmProvider(props) {
   };
 
   const addComment = (value, id) => {
-    setFilms((oldValue) => {
-      const extra = oldValue;
-      extra.forEach((e) => {
-        if (e.id === id) {
-          e.comments.push({ value });
-        }
+    if (value)
+      setFilms((oldValue) => {
+        const extra = oldValue;
+        extra.forEach((e) => {
+          if (e.id === id) {
+            e.comments.push({ value });
+          }
+        });
+        return extra;
       });
-      return extra;
-    });
     let obj = null;
     films.forEach((e) => {
       if (e.id === id) obj = e;
