@@ -62,10 +62,10 @@ export default function FilmProvider(props) {
     });
   };
 
-  const deleteComment = (value, id) => {
+  const deleteComment = (id, index) => {
     films.forEach((e) => {
       if (e.id === id) {
-        e.comments = e.comments.filter((e) => e.value !== value);
+        e.comments.splice(index, 1);
       }
     });
 

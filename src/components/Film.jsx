@@ -56,10 +56,10 @@ const Film = () => {
           variant="outlined"
           color="secondary"
           onClick={() => {
-            deleteComment(e.value, currentFilm.id);
+            deleteComment(currentFilm.id, index);
           }}
         >
-          удалить
+          Delete
         </Button>
       </div>
     ));
